@@ -45,7 +45,7 @@
   <build>
     <plugins>
       <plugin>
-        <artifactId>maven-dependency-plugin</artifactId>
+        <artifactId>dependency-maven-plugin</artifactId>
         <version>@project.version@</version>
         <configuration>
           <outputFile>target/resolved.txt</outputFile>

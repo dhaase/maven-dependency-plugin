@@ -49,7 +49,7 @@
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-dependency-plugin</artifactId>
+        <artifactId>dependency-maven-plugin</artifactId>
         <version>@project.version@</version>
         <executions>
           <execution>

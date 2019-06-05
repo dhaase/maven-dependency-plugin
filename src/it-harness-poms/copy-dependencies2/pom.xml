@@ -42,7 +42,7 @@ under the License.
   <plugins>
       <plugin>
          <groupId>org.apache.maven.plugins</groupId>
-         <artifactId>maven-dependency-plugin</artifactId>
+         <artifactId>dependency-maven-plugin</artifactId>
               <configuration>
                <stripVersion>true</stripVersion>
                <outputDirectory>libs</outputDirectory>

@@ -38,7 +38,7 @@
   <build>
     <plugins>
       <plugin>
-        <artifactId>maven-dependency-plugin</artifactId>
+        <artifactId>dependency-maven-plugin</artifactId>
         <configuration>
           <usedDependencies>
             <usedDependency>org.apache.maven.plugins.dependency:annotation</usedDependency>

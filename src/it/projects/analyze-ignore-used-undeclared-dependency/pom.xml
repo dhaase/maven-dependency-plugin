@@ -48,7 +48,7 @@
     <pluginManagement>
       <plugins>
         <plugin>
-          <artifactId>maven-dependency-plugin</artifactId>
+          <artifactId>dependency-maven-plugin</artifactId>
           <configuration>
            <verbose>true</verbose>
            <failOnWarning>true</failOnWarning>
