@@ -48,7 +48,7 @@
         <version>1.0</version>
       </plugin>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
+        <groupId>de.ing.maven.plugins</groupId>
         <artifactId>dependency-maven-plugin</artifactId>
         <version>@project.version@</version>
         <executions>

@@ -36,7 +36,7 @@ Copying project dependencies
   <build>
     <plugins>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
+        <groupId>de.ing.maven.plugins</groupId>
         <artifactId>dependency-maven-plugin</artifactId>
         <version>${project.version}</version>
         <executions>
@@ -73,7 +73,7 @@ Copying project dependencies
   <build>
     <plugins>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
+        <groupId>de.ing.maven.plugins</groupId>
         <artifactId>dependency-maven-plugin</artifactId>
         <version>${project.version}</version>
         <executions>

@@ -37,7 +37,7 @@ Copying specific artifacts
   <build>
     <plugins>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
+        <groupId>de.ing.maven.plugins</groupId>
         <artifactId>dependency-maven-plugin</artifactId>
         <version>${project.version}</version>
         <executions>
@@ -105,7 +105,7 @@ Copying specific artifacts
   <build>
     <plugins>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
+        <groupId>de.ing.maven.plugins</groupId>
         <artifactId>dependency-maven-plugin</artifactId>
         <version>${project.version}</version>
         <executions>
@@ -150,7 +150,7 @@ Copying specific artifacts
   <build>
     <plugins>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
+        <groupId>de.ing.maven.plugins</groupId>
         <artifactId>dependency-maven-plugin</artifactId>
         <version>${project.version}</version>
         <executions>
@@ -196,7 +196,7 @@ Copying specific artifacts
   <build>
     <plugins>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
+        <groupId>de.ing.maven.plugins</groupId>
         <artifactId>dependency-maven-plugin</artifactId>
         <version>${project.version}</version>
         <executions>
@@ -240,7 +240,7 @@ mvn dependency:copy
   <build>
     <plugins>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
+        <groupId>de.ing.maven.plugins</groupId>
         <artifactId>dependency-maven-plugin</artifactId>
         <version>${project.version}</version>
         <configuration>

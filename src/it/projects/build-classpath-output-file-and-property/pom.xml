@@ -46,7 +46,7 @@
   <build>
     <plugins>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
+        <groupId>de.ing.maven.plugins</groupId>
         <artifactId>dependency-maven-plugin</artifactId>
         <version>@project.version@</version>
         <executions>
@@ -60,7 +60,7 @@
         </executions>
       </plugin>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
+        <groupId>de.ing.maven.plugins</groupId>
         <artifactId>maven-enforcer-plugin</artifactId>
         <version>1.4.1</version>
         <executions>

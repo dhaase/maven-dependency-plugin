@@ -62,7 +62,7 @@ Usage
   <build>
     <plugins>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
+        <groupId>de.ing.maven.plugins</groupId>
         <artifactId>dependency-maven-plugin</artifactId>
         <version>${project.version}</version>
         <executions>
@@ -110,7 +110,7 @@ mvn dependency:copy
   <build>
     <plugins>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
+        <groupId>de.ing.maven.plugins</groupId>
         <artifactId>dependency-maven-plugin</artifactId>
         <version>${project.version}</version>
         <configuration>
@@ -195,7 +195,7 @@ mvn dependency:copy
   <build>
     <plugins>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
+        <groupId>de.ing.maven.plugins</groupId>
         <artifactId>dependency-maven-plugin</artifactId>
         <version>${project.version}</version>
         <executions>
@@ -242,7 +242,7 @@ mvn dependency:copy
   <build>
     <plugins>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
+        <groupId>de.ing.maven.plugins</groupId>
         <artifactId>dependency-maven-plugin</artifactId>
         <version>${project.version}</version>
         <executions>
@@ -278,7 +278,7 @@ mvn dependency:unpack
   <build>
     <plugins>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
+        <groupId>de.ing.maven.plugins</groupId>
         <artifactId>dependency-maven-plugin</artifactId>
         <version>${project.version}</version>
         <configuration>
@@ -354,7 +354,7 @@ mvn dependency:unpack
   <build>
     <plugins>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
+        <groupId>de.ing.maven.plugins</groupId>
         <artifactId>dependency-maven-plugin</artifactId>
         <version>${project.version}</version>
         <executions>
@@ -552,7 +552,7 @@ mvn dependency:build-classpath -Dmdep.outputFile=cp.txt
   <build>
     <plugins>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
+        <groupId>de.ing.maven.plugins</groupId>
         <artifactId>dependency-maven-plugin</artifactId>
         <version>${project.version}</version>
         <executions>
@@ -685,7 +685,7 @@ mvn dependency:get -Dartifact=org.apache.maven:maven-core:2.2.1:jar:sources -Dre
    <plugins>
     ...
     <plugin>
-      <groupId>org.apache.maven.plugins</groupId>
+      <groupId>de.ing.maven.plugins</groupId>
       <artifactId>dependency-maven-plugin</artifactId>
       <version>${project.version}</version>
       <reportSets>
