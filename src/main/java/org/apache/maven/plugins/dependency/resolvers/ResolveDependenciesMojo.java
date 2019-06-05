@@ -78,7 +78,7 @@ public class ResolveDependenciesMojo
      * 
      * @since 2.8
      */
-    @Parameter( property = "sort", defaultValue = "false" )
+    @Parameter( property = "sort", defaultValue = "true" )
     boolean sort;
 
     /**
@@ -142,6 +142,55 @@ public class ResolveDependenciesMojo
     public String getOutput( boolean outputAbsoluteArtifactFilename, boolean theOutputScope, boolean theSort )
     {
         StringBuilder sb = new StringBuilder();
+
+        appendResolvedDependencies( outputAbsoluteArtifactFilename, theOutputScope, theSort, sb );
+        appendSkippedDependencies( outputAbsoluteArtifactFilename, theOutputScope, theSort, sb );
+        appendUnResolvedDependencies( outputAbsoluteArtifactFilename, theOutputScope, theSort, sb );
+
+        sb.append( System.lineSeparator() );
+
+        return sb.toString();
+    }
+
+    private void appendUnResolvedDependencies( boolean outputAbsoluteArtifactFilename,
+                                               boolean theOutputScope,
+                                               boolean theSort,
+                                               StringBuilder sb )
+    {
+        if ( results.getUnResolvedDependencies() != null && !results.getUnResolvedDependencies().isEmpty() )
+        {
+            sb.append( System.lineSeparator() );
+            sb.append( "The following files have NOT been resolved:" );
+            sb.append( System.lineSeparator() );
+            Set<Artifact> unResolvedDependencies = new LinkedHashSet<Artifact>();
+            unResolvedDependencies.addAll( results.getUnResolvedDependencies() );
+            sb.append( buildArtifactListOutput( unResolvedDependencies, outputAbsoluteArtifactFilename, theOutputScope,
+                                                theSort ) );
+        }
+    }
+
+    private void appendSkippedDependencies( boolean outputAbsoluteArtifactFilename,
+                                            boolean theOutputScope,
+                                            boolean theSort,
+                                            StringBuilder sb )
+    {
+        if ( results.getSkippedDependencies() != null && !results.getSkippedDependencies().isEmpty() )
+        {
+            sb.append( System.lineSeparator() );
+            sb.append( "The following files were skipped:" );
+            sb.append( System.lineSeparator() );
+            Set<Artifact> skippedDependencies = new LinkedHashSet<Artifact>();
+            skippedDependencies.addAll( results.getSkippedDependencies() );
+            sb.append( buildArtifactListOutput( skippedDependencies, outputAbsoluteArtifactFilename, theOutputScope,
+                                                theSort ) );
+        }
+    }
+
+    private void appendResolvedDependencies( boolean outputAbsoluteArtifactFilename,
+                                             boolean theOutputScope,
+                                             boolean theSort,
+                                             StringBuilder sb )
+    {
         sb.append( System.lineSeparator() );
         sb.append( "The following files have been resolved:" );
         sb.append( System.lineSeparator() );
@@ -155,94 +204,16 @@ public class ResolveDependenciesMojo
             sb.append( buildArtifactListOutput( results.getResolvedDependencies(), outputAbsoluteArtifactFilename,
                                                 theOutputScope, theSort ) );
         }
-
-        if ( results.getSkippedDependencies() != null && !results.getSkippedDependencies().isEmpty() )
-        {
-            sb.append( System.lineSeparator() );
-            sb.append( "The following files were skipped:" );
-            sb.append( System.lineSeparator() );
-            Set<Artifact> skippedDependencies = new LinkedHashSet<Artifact>();
-            skippedDependencies.addAll( results.getSkippedDependencies() );
-            sb.append( buildArtifactListOutput( skippedDependencies, outputAbsoluteArtifactFilename, theOutputScope,
-                                                theSort ) );
-        }
-
-        if ( results.getUnResolvedDependencies() != null && !results.getUnResolvedDependencies().isEmpty() )
-        {
-            sb.append( System.lineSeparator() );
-            sb.append( "The following files have NOT been resolved:" );
-            sb.append( System.lineSeparator() );
-            Set<Artifact> unResolvedDependencies = new LinkedHashSet<Artifact>();
-            unResolvedDependencies.addAll( results.getUnResolvedDependencies() );
-            sb.append( buildArtifactListOutput( unResolvedDependencies, outputAbsoluteArtifactFilename, theOutputScope,
-                                                theSort ) );
-        }
-        sb.append( System.lineSeparator() );
-
-        return sb.toString();
     }
 
-    private StringBuilder buildArtifactListOutput( Set<Artifact> artifacts, boolean outputAbsoluteArtifactFilename,
+    protected StringBuilder buildArtifactListOutput( Set<Artifact> artifacts, boolean outputAbsoluteArtifactFilename,
                                                    boolean theOutputScope, boolean theSort )
     {
         StringBuilder sb = new StringBuilder();
         List<String> artifactStringList = new ArrayList<String>();
         for ( Artifact artifact : artifacts )
         {
-            MessageBuilder messageBuilder = MessageUtils.buffer();
-
-            messageBuilder.a( "   " );
-
-            if ( theOutputScope )
-            {
-                messageBuilder.a( artifact.toString() );
-            }
-            else
-            {
-                messageBuilder.a( artifact.getId() );
-            }
-
-            if ( outputAbsoluteArtifactFilename )
-            {
-                try
-                {
-                    // we want to print the absolute file name here
-                    String artifactFilename = artifact.getFile().getAbsoluteFile().getPath();
-
-                    messageBuilder.a( ':' ).a( artifactFilename );
-                }
-                catch ( NullPointerException e )
-                {
-                    // ignore the null pointer, we'll output a null string
-                }
-            }
-
-            if ( theOutputScope && artifact.isOptional() )
-            {
-                messageBuilder.a( " (optional) " );
-            }
-
-            // dependencies:collect won't download jars
-            if ( artifact.getFile() != null )
-            {
-                ModuleDescriptor moduleDescriptor = getModuleDescriptor( artifact.getFile() );
-                if ( moduleDescriptor != null )
-                {
-                    messageBuilder.project( " -- module " + moduleDescriptor.name );
-
-                    if ( moduleDescriptor.automatic )
-                    {
-                        if ( "MANIFEST".equals( moduleDescriptor.moduleNameSource ) )
-                        {
-                            messageBuilder.strong( " [auto]" );
-                        }
-                        else
-                        {
-                            messageBuilder.warning( " (auto)" );
-                        }
-                    }
-                }
-            }
+            MessageBuilder messageBuilder = formatArtifact(outputAbsoluteArtifactFilename, theOutputScope, artifact);
             artifactStringList.add( messageBuilder.toString() + System.lineSeparator() );
         }
         if ( theSort )
@@ -254,6 +225,65 @@ public class ResolveDependenciesMojo
             sb.append( artifactString );
         }
         return sb;
+    }
+
+    protected MessageBuilder formatArtifact( boolean outputAbsoluteArtifactFilename, boolean theOutputScope, Artifact artifact )
+    {
+        MessageBuilder messageBuilder = MessageUtils.buffer();
+
+        messageBuilder.a( "   " );
+
+        if ( theOutputScope )
+        {
+            messageBuilder.a( artifact.toString() );
+        }
+        else
+        {
+            messageBuilder.a( artifact.getId() );
+        }
+
+        if ( outputAbsoluteArtifactFilename )
+        {
+            try
+            {
+                // we want to print the absolute file name here
+                String artifactFilename = artifact.getFile().getAbsoluteFile().getPath();
+
+                messageBuilder.a( ':' ).a( artifactFilename );
+            }
+            catch ( NullPointerException e )
+            {
+                // ignore the null pointer, we'll output a null string
+            }
+        }
+
+        if ( theOutputScope && artifact.isOptional() )
+        {
+            messageBuilder.a( " (optional) " );
+        }
+
+        // dependencies:collect won't download jars
+        if ( artifact.getFile() != null )
+        {
+            ModuleDescriptor moduleDescriptor = getModuleDescriptor( artifact.getFile() );
+            if ( moduleDescriptor != null )
+            {
+                messageBuilder.project( " -- module " + moduleDescriptor.name );
+
+                if ( moduleDescriptor.automatic )
+                {
+                    if ( "MANIFEST".equals( moduleDescriptor.moduleNameSource ) )
+                    {
+                        messageBuilder.strong( " [auto]" );
+                    }
+                    else
+                    {
+                        messageBuilder.warning( " (auto)" );
+                    }
+                }
+            }
+        }
+        return messageBuilder;
     }
 
     private ModuleDescriptor getModuleDescriptor( File artifactFile )
